@@ -11,7 +11,7 @@ The feature of our home surveillance are :
 
 ## 2. Scheme
 
-##3. Prerequisite
+## 3. Prerequisite
 To begin building our home surveillnace system, we need :
 
 - Twilio API (install using `pip install twilio`)
