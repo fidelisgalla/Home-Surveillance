@@ -1,6 +1,0 @@
-pending job face recognition :
-
-- please ensure the conf file is true
-- please correct the TwillioNotifier
-- please add for the use video option
-- sending via twillio drop box, file the link of the file and use the 

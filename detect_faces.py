@@ -1,38 +1,39 @@
 #modified by Fidelis
 
-from pyimagesearch.tempimage import TempImage
+from utils.tempimage import TempImage
 from imutils.video import VideoStream
-from pyimagesearch.notifications import TwillioDropbox
+from utils.notifications import TwillioDropbox
 import numpy as np
-import argparse
+#import argparse
 import warnings
 import datetime
 import imutils
 import json
 import time
 import cv2
+import config
 
 # construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-p", "--prototxt", required=True,
-	help="path to Caffe 'deploy' prototxt file")
-ap.add_argument("-m", "--model", required=True,
-	help="path to Caffe pre-trained model")
-ap.add_argument("-co", "--confidence", type=float, default=0.5,
-	help="minimum probability to filter weak detections")
-ap.add_argument("-c", "--conf", required=True,
-	help="path to the JSON configuration file")
-args = vars(ap.parse_args())
+#ap = argparse.ArgumentParser()
+#ap.add_argument("-p", "--prototxt", required=True,
+#	help="path to Caffe 'deploy' prototxt file")
+#ap.add_argument("-m", "--model", required=True,
+#	help="path to Caffe pre-trained model")
+#ap.add_argument("-co", "--confidence", type=float, default=0.5,
+#	help="minimum probability to filter weak detections")
+#ap.add_argument("-c", "--conf", required=True,
+#	help="path to the JSON configuration file")
+#args = vars(ap.parse_args())
 
 # filter warnings, load the configuration and initialize the Dropbox
 # client
 warnings.filterwarnings("ignore")
-conf = json.load(open(args["conf"]))
+conf = json.load(open(config.conf_path))
 
 
 # load our serialized model from disk
 print("[INFO] loading model...")
-net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
+net = cv2.dnn.readNetFromCaffe(config.prototxt_path, config.caffee_path)
 
 # initialize the camera and grab a reference to the raw camera capture
 print("[INFO] starting video stream...")
@@ -65,7 +66,7 @@ while True:
         confidence = detections[0, 0, i, 2]
         
         
-        if confidence < args["confidence"]:
+        if confidence < 0.5:
             continue
 
 		# compute the bounding box for the contour, draw it on the frame,
@@ -109,8 +110,8 @@ while True:
                     
 				# upload the image to Dropbox and cleanup the tempory image
                     tn = TwillioDropbox.TwilioNotifier(conf)
-                    
-                    #print("[UPLOAD] file {}.jpg".format(ts))
+                
+                    print("[UPLOAD] file {}.jpg".format(ts))
                     #path = "/{base_path}/{timestamp}.jpg".format(
 					  # base_path=conf["dropbox_base_path"], timestamp=ts)
                     
