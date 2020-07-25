@@ -11,6 +11,8 @@ The feature of our home surveillance are :
 
 ## 2. Scheme
 
+![Fig1](https://github.com/fidelisgalla/Home-Surveillance/blob/master/Scheme.jpg?raw=true)
+
 ## 3. Prerequisite
 To begin building our home surveillnace system, we need :
 
